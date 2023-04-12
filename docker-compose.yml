@@ -31,3 +31,5 @@ services:
     build: ./client/
     ports:
       - ${CLIENT_PORT}:${CLIENT_PORT}
+    environment:
+      - VITE_BACKEND_URL=${SERVER_PORT}
