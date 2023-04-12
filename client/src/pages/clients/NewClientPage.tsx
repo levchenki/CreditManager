@@ -48,14 +48,14 @@ export const NewClientPage = () => {
   const [number, setNumber] = useState<string>('')
   const [divisionCode, setDivisionCode] = useState<string>('')
   const [issuedBy, setIssuedBy] = useState<string>('')
-  const [issuedDate, setIssuedDate] = useState<Date>(new Date())
+  const [issuedDate, setIssuedDate] = useState<string>(formatDate(new Date()))
   const [registrationAddress, setRegistrationAddress] = useState<string>('')
 
   const [organizationName, setOrganizationName] = useState<string>('')
   const [position, setPosition] = useState<string>('')
-  const [startDate, setStartDate] = useState<Date>(new Date())
+  const [startDate, setStartDate] = useState<string>(formatDate(new Date()))
   const [isActiveWork, setIsActiveWork] = useState(true)
-  const [endDate, setEndDate] = useState<Date>(new Date())
+  const [endDate, setEndDate] = useState<string>(formatDate(new Date()))
 
 
   const createClient = () => {
@@ -70,14 +70,14 @@ export const NewClientPage = () => {
     formData.append('passport[number]', number.toString())
     formData.append('passport[divisionCode]', divisionCode.toString())
     formData.append('passport[issuedBy]', issuedBy)
-    formData.append('passport[issuedDate]', formatDate(issuedDate))
+    formData.append('passport[issuedDate]', issuedDate)
     formData.append('passport[registrationAddress]', registrationAddress)
 
     formData.append('employmentInfo[0][organizationName]', organizationName)
     formData.append('employmentInfo[0][position]', position)
-    formData.append('employmentInfo[0][startDate]', formatDate(startDate))
+    formData.append('employmentInfo[0][startDate]', startDate)
     if (!isActiveWork)
-      formData.append('employmentInfo[0][endDate]', formatDate(endDate))
+      formData.append('employmentInfo[0][endDate]', endDate)
 
     postClient(formData).then(data => {
       const id = data.data;
@@ -164,8 +164,8 @@ export const NewClientPage = () => {
           <label>
             Дата выдачи:&nbsp;
             <input type="date" name="issuedDate"
-                   defaultValue={formatDate(issuedDate)}
-                   onChange={event => setIssuedDate(new Date(event.target.value))}
+                   defaultValue={issuedDate}
+                   onChange={event => setIssuedDate(event.target.value)}
             />
           </label>
           <label>
@@ -191,9 +191,9 @@ export const NewClientPage = () => {
           </label>
           <label>
             Дата начала работы:&nbsp;
-            <input type="date" defaultValue={formatDate(startDate)}
+            <input type="date" defaultValue={startDate}
                    name="startDate"
-                   onChange={event => setStartDate(new Date(event.target.value))}
+                   onChange={event => setStartDate(event.target.value)}
             />
           </label>
           <label>
@@ -204,9 +204,9 @@ export const NewClientPage = () => {
           <label>
             Дата конца работы:&nbsp;
             <input disabled={isActiveWork} type="date"
-                   defaultValue={formatDate(endDate)}
+                   defaultValue={endDate}
                    name="endDate"
-                   onChange={event => setEndDate(new Date(event.target.value))}
+                   onChange={event => setEndDate(event.target.value)}
             />
           </label>
         </SForm>
